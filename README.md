@@ -1,4 +1,4 @@
-<img src="assets/logo.png" align="right" width="100">
+<img src="assets/logo.png" align="right" width="300">
 
 # Äänestys Sovellus - Tiimi projekti
 
