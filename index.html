@@ -12,38 +12,6 @@
   <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
 
-  <style>
-    .bd-placeholder-img {
-      font-size: 1.125rem;
-      text-anchor: middle;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-
-    .infoHide {
-      display: none;
-    }
-
-    @media (min-width: 768px) {
-      .bd-placeholder-img-lg {
-        font-size: 3.5rem;
-      }
-    }
-
-    .container {
-      max-width: 960px;
-    }
-    
-    .custom-toggler {
-        border-color:rgb(39, 45, 67) 
-    }
-
-    .custom-toggler .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%28100, 100, 100, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-    }
-
-  </style>
 </head>
 
 <body class="bg-light">
@@ -97,204 +65,79 @@
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="submit">Searh</button>
         </form>
-        <div class="col-md-5 col-lg-4 order-md-last">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-primary">Ohjauspaneeli</span>
-          </h4>
-
-          <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-              <path
-                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-            </symbol>
-            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-              <path
-                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-            </symbol>
-            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-              <path
-                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-            </symbol>
-          </svg>
-          <div id="userOK" class="infoHide">
-            <div class="alert alert-primary d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                <use xlink:href="#info-fill" />
-              </svg>
-              <div>
-                Käyttäjä aktivoitu!
-              </div>
+        <div class="col-md-5 col-lg-6 order-md-last">
+          <div class="col-md-8" id="voteName1">
+            <hr class="my-4">
+            <h3>Mikä on lempieläimesi?</h3>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voteGroup1" value="Kissä">
+              <label class="form-check-label">
+                Kissä
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voteGroup1" value="Koira">
+              <label class="form-check-label">
+                Koira
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voteGroup1" value="Papukaija">
+              <label class="form-check-label">
+                Papukaija
+              </label>
+            </div>
+            <button type="button" class="btn btn-primary mt-3 submit-btn" id="subm1"
+              onclick="vote(1)">Äänestä</button>
+            <button type="button" class="btn btn-secondary mt-3" id="showResults1" onclick="showResults(1)">Näytä
+              tulokset</button>
+            <button type="button" class="btn btn-danger mt-3" id="removeQuestion1" style="display: none;"
+              onclick="removeQuestion(1)">Poistaa</button>
+            <div id="vote1Result" class="mt-3" style="display: none;">
             </div>
           </div>
-          <div id="adminOK" class="infoHide">
-            <div class="alert alert-primary d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                <use xlink:href="#info-fill" />
-              </svg>
-              <div>
-                Ylläpitäjä aktivoitu!
-              </div>
+          <div class="col-md-8" id="voteName2">
+            <hr class="my-4">
+            <h3>Millaista internetyhteyttä käytät?</h3>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voteGroup2" value="5g">
+              <label class="form-check-label">
+                5G
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voteGroup2" value="4g">
+              <label class="form-check-label">
+                4G
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="voteGroup2" value="Valokuitu">
+              <label class="form-check-label">
+                Valokuitu
+              </label>
+            </div>
+            <button type="button" class="btn btn-primary mt-3 submit-btn" id="subm2" onclick="vote(2)">Äänestä</button>
+            <button type="button" class="btn btn-secondary mt-3" id="showResults2" onclick="showResults(2)">Näytä
+              tulokset</button>
+            <button type="button" class="btn btn-danger mt-3" id="removeQuestion2" style="display: none;"
+              onclick="removeQuestion(2)">Poistaa</button>
+            <div id="vote2Result" class="mt-3" style="display: none;">
+            </div>
+
+          </div>
+          <div id="newQuestionArea" class="mt-3">
+          </div>
+          <div class="my-3">
+          </div>
+          <div class="row gy-3">
+            <div class="col-md-6">
             </div>
           </div>
-          <div id="adminOKnotVote" class="infoHide">
-            <div class="alert alert-warning d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                <use xlink:href="#info-fill" />
-              </svg>
-              <div>
-                Et voi äänestää, koska ylläpitäjä on aktiivinen.
-              </div>
-            </div>
-          </div>
-          <div id="voted" class="infoHide">
-            <div class="alert alert-success d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
-                <use xlink:href="#check-circle-fill" />
-              </svg>
-              <div>Äänestys onnistui!
-              </div>
-            </div>
-          </div>
-          <div id="oneVote" class="infoHide">
-            <div class="alert alert-warning d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
-                <use xlink:href="#exclamation-triangle-fill" />
-              </svg>
-              <div>
-                Jokainen käyttäjä voi antaa yhden äänen.
-              </div>
-            </div>
-          </div>
-          <div id="deleteOK" class="infoHide">
-            <div class="alert alert-warning d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
-                <use xlink:href="#exclamation-triangle-fill" />
-              </svg>
-              <div>
-                Valitsemasi kysymys on poistettu.
-              </div>
-            </div>
-          </div>
-
-          <div id="adminNot" class="infoHide">
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-                <use xlink:href="#exclamation-triangle-fill" />
-              </svg>
-              <div>
-                Ylläpitäjän valtuudet vaaditaan!
-              </div>
-            </div>
-          </div>
-          <div id="notName" style="display: none;">
-            <div class="alert alert-danger d-flex align-items-center" role="alert">
-              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-                <use xlink:href="#exclamation-triangle-fill" />
-              </svg>
-              <div>
-                Et voi äänestää syöttämättä käyttäjätunnustasi!
-              </div>
-            </div>
-          </div>
-
-
-          <div class="form-check">
-            <input id="user" name="userType" type="radio" class="form-check-input" onchange="adminNotfn()" checked
-              required>
-            <h4><label class="form-check-label" for="user">Käyttäjä</label></h4>
-          </div>
-          <div id="adminNotUse" style="display: block;">
-            <label for="cc-name" class="form-label">Käyttäjän nimi:</label>
-            <input type="text" class="form-control" id="userName" placeholder="Nimi" onkeyup="updateName()">
-          </div>
-          <hr class="my-4">
-
-          <div class="form-check">
-            <input id="admin" name="userType" type="radio" class="form-check-input" value="admin"
-              onchange="adminFunctions()">
-            <h4><label class="form-check-label" for="admin">Ylläpitäjä</label></h4>
-          </div>
-
-          <hr class="my-4">
-
-          <div class="col-md-12" id="addNewArea" style="display: none;">
-            <h4 class="d-flex justify-content-between align-items-center mb-3">
-              <span class="text-primary">Lisää uusi ääni</span>
-            </h4>
-            <div id="additionalQuestion">
-              <div>
-                <label for="additionalQuestion">Uusi kysymys:</label>
-                <input type="text" class="form-control" id="additionalQuestionInput">
-              </div>
-              <div>
-                <label for="additionalOption1">Vaihtoehto 1</label>
-                <input type="text" class="form-control" id="additionalOption1">
-              </div>
-              <div>
-                <label for="additionalOption2">Vaihtoehto 2</label>
-                <input type="text" class="form-control" id="additionalOption2">
-              </div>
-              <div>
-                <label for="additionalOption3">Vaihtoehto 3</label>
-                <input type="text" class="form-control" id="additionalOption3">
-              </div>
-              <button type="button" class="btn btn-primary mt-3" id="addNewQuestion"
-                onclick="addNewQuestion()">Lisätä</button>
-              <div id="addOK" class="infoHide mt-3">
-                <div class="alert alert-success d-flex align-items-center" role="alert">
-                  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                    <use xlink:href="#info-fill" />
-                  </svg>
-                  <div>
-                    Uusi äänestys lisätty.
-                  </div>
-                </div>
-              </div>
-              <div id="notInput" class="mt-3" style="display: none;">
-                <div class="alert alert-danger d-flex align-items-center" role="alert">
-                  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
-                    <use xlink:href="#exclamation-triangle-fill" />
-                  </svg>
-                  <div>
-                    Et voi äänestää syöttämättä käyttäjätunnustasi!
-                  </div>
-                </div>
-              </div>
-
-
-              <button type="button" class="btn btn-danger mt-3" id="resetStatsBtn" onclick="resetStats()">Nollaa kaikki
-                äänet</button>
-              <div id="nollaOK" class="infoHide mt-3">
-                <div class="alert alert-success d-flex align-items-center" role="alert">
-                  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                    <use xlink:href="#info-fill" />
-                  </svg>
-                  <div>
-                    Kaikki äänestystulokset on nollattu!
-                  </div>
-                </div>
-              </div>
-              <div id="nullOK" class="infoHide mt-3">
-                <div class="alert alert-warning d-flex align-items-center" role="alert">
-                  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:">
-                    <use xlink:href="#info-fill" />
-                  </svg>
-                  <div>
-                    Ei äänestystä!
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
         </div>
-        <div class="col-md-7 col-lg-8">
-          <form class="needs-validation" novalidate>
-            <div class="row g-3">
-
-            </div>
+        <div class="col-md-7 col-lg-6">
+          
+            
 
 
             <div class="col-md-8" id="voteName1">
@@ -365,7 +208,7 @@
               <div class="col-md-6">
               </div>
             </div>
-          </form>
+    
         </div>
       </div>
     </main>
