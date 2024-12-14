@@ -1,8 +1,12 @@
-<img src="assets/logo.png" align="right" width="100">
+## AanestysSovellus
 
-# Äänestys Sovellus - Tiimi projekti
+<p align="center"><img src="/logo.png" width="540"/></p>
 
-Voit myös aktiivisesti käyttää sitä verkkosivuston https://aanestys.enes.fi kautta.
+# React + Vite
 
-## Käyttöoikeudet
-Sinulla on täysi oikeus käyttää tätä materiaalia omaan oppimiseesi. Lisäksi opettajat voivat saada pääsyn kaikkeen sisältöön ja käyttää sitä opiskelijoidensa kanssa. Kuitenkin kaikkien, jotka käyttävät tätä materiaalia - oli tarkoituksena mikä tahansa - tulee säilyttää alkuperäisen materiaalin viite, joka on luotu ja tarjottu Tuomas Lappalainen-Yahya Rouissi - Enes Koc toimesta. Tätä sisältöä ei saa missään tilanteessa käyttää kirjojen tai oppimateriaalien laatimiseen kokonaan tai osittain taloudellisen hyödyn saamiseksi kirjailijoiden, kustantajien tai oppilaitosten toimesta.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
