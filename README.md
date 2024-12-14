@@ -1,6 +1,9 @@
-## AanestysSovellus
+<img src="public/logo.png" align="right" width="100">
 
-<p align="center"><img src="/logo.png" width="540"/></p>
+# Äänestys Sovellus - Tiimi projekti
+
+Voit myös aktiivisesti käyttää sitä verkkosivuston https://aanestys.enes.fi kautta.
+
 
 # React + Vite
 
