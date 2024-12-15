@@ -19,6 +19,7 @@ const LoginComponent = ({ setToken }) => {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { username, password });
       setToken(response.data.token);
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('role', response.data.role); 
       setLoginSuccess(true);
     } catch (error) {
       console.error('Login failed:', error.response ? error.response.data : error.message);
@@ -26,21 +27,20 @@ const LoginComponent = ({ setToken }) => {
   };
 
   useEffect(() => {
-    let timer;
-    if (loginSuccess) {
-      timer = setInterval(() => {
-        setCountdown((prev) => {
-          if (prev === 1) {
-            clearInterval(timer);
-            navigate('/');
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [loginSuccess, navigate]);
-
+      if (loginSuccess) {
+        let timer = setInterval(() => {
+          setCountdown((prev) => prev - 1);
+        }, 1000);
+  
+        if (countdown === 0) {
+          clearInterval(timer);
+          navigate('/');
+        }
+  
+        return () => clearInterval(timer);
+      }
+    }, [loginSuccess, countdown, navigate]);
+  
   return (
     <div className="container">
       <Navbar/>
@@ -68,7 +68,7 @@ const LoginComponent = ({ setToken }) => {
               <button className="btn btn-success w-100 py-2" type="submit">Sign in</button>
             </form>
             <div className="text-start my-3">
-              <a href="remember.html"><label>Unohditko salasanasi?</label></a>
+               <Link to="/register"><label>Etkö ole jäsen? REKISTERÖIDY NYT!</label></Link>
             </div>
           </main>
         </>

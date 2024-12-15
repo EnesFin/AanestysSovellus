@@ -11,6 +11,7 @@ const PollComponent = () => {
   const [selectedPoll, setSelectedPoll] = useState('');
   const [selectedOption, setSelectedOption] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [votedPolls, setVotedPolls] = useState([]);
 
   useEffect(() => {
     const fetchPolls = async () => {
@@ -27,7 +28,7 @@ const PollComponent = () => {
     };
     fetchPolls();
   }, []);
-
+  
   useEffect(() => {
     const filtered = polls.filter((poll) =>
       poll.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -49,16 +50,24 @@ const PollComponent = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPolls((prevPolls) =>
-        prevPolls.map((poll) => poll._id === selectedPoll
-          ? { ...poll, options: poll.options.map((option) =>
-            option._id === selectedOption ? { ...option, votes: option.votes + 1 } : option ), } : poll ) );
-      
-      alert('Vote cast successfully!');
+        prevPolls.map((poll) =>
+          poll._id === selectedPoll
+            ? {
+                ...poll,
+                options: poll.options.map((option) =>
+                  option._id === selectedOption
+                    ? { ...option, votes: option.votes + 1 }
+                    : option
+                ),
+              }
+            : poll
+        )
+      );
     } catch (error) {
       console.error('Failed to cast vote:', error.response ? error.response.data : error.message);
     }
   };
-
+  
   return (
     <div className="container">
        <Navbar />
@@ -75,30 +84,54 @@ const PollComponent = () => {
       </form>
 
       {filteredPolls.map((poll) => (
-        <div className="col-md-8 mb-4" key={poll._id}>
-          <hr className="my-4" />
-          <h3>{poll.question}</h3>
-          {poll.options.map((option) => (
-            <div className="form-check" key={option._id}>
-              <input
-                className="form-check-input"
-                type="radio"
-                name={`voteGroup-${poll._id}`}
-                value={option._id}
-                checked={selectedOption === option._id}
-                onChange={() => {
-                  setSelectedPoll(poll._id);
-                  setSelectedOption(option._id);
-                }}
-              />
-              <label className="form-check-label">
-                {option.name} - {option.votes} votes
-              </label>
-            </div>
-          ))}
-          <button type="button" className="btn btn-primary mt-3" onClick={handleVote} disabled={!selectedOption}>Äänestä</button>
+  <div className="col-md-8 mb-4 mx-auto" key={poll._id}>
+    <hr className="my-4" />
+    <h3>{poll.question}</h3>
+    {poll.options.map((option) => (
+      <div className="d-flex align-items-center mb-3" key={option._id}>
+        <div className="form-check me-2">
+          <input
+            className="form-check-input"
+            type="radio"
+            name={`voteGroup-${poll._id}`}
+            value={option._id}
+            checked={selectedOption === option._id}
+            onChange={() => {
+              setSelectedPoll(poll._id);
+              setSelectedOption(option._id);
+            }}
+          />
+          <label className="form-check-label h4">
+            {option.name}
+          </label>
         </div>
-      ))}
+        
+        <div className="w-100">
+        <b class="text-secondary">{option.votes} votes</b>
+          <div className="progress" >
+            <div
+              className="progress-bar progress-bar-striped bg-success"
+              role="progressbar"
+              style={{ width: `${option.votes}%`, backgroundColor: '#007bff', color: '#ffffff' }}
+              aria-valuenow={option.votes}
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+     {votedPolls.includes(poll._id) ? (
+              <p className="text-muted">You have voted for this question</p>
+            ) : (
+              <button type="button" className="btn btn-primary mt-3" onClick={handleVote} disabled={!selectedOption}>Äänestä</button>
+            )}
+  </div>
+))}
+
+
       {/* Bootstrap Modal */}
       <div className={`modal fade ${showModal ? 'show d-block' : ''}`} tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
           <div className="modal-dialog" role="document">

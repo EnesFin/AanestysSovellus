@@ -21,28 +21,18 @@ const RegisterComponent = ({ setToken }) => {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, { username, password, email, role });
       setToken(response.data.token);
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('role', role); // Directly store the role from state
       setRegisterSuccess(true);
     } catch (error) {
       console.error('Registration failed:', error.response ? error.response.data : error.message);
     }
   };
-
-  useEffect(() => {
-    let timer;
-    if (registerSuccess) {
-      timer = setInterval(() => {
-        setCountdown((prev) => {
-          if (prev === 1) {
-            clearInterval(timer);
-            navigate('/');
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [registerSuccess, navigate]);
-
+  
+  
+  useEffect(() => { if (registerSuccess) { let timer = setInterval(() =>
+     { setCountdown((prev) => prev - 1); }, 1000); 
+     if (countdown === 0) { clearInterval(timer); navigate('/'); } 
+     return () => clearInterval(timer); } }, [registerSuccess, countdown, navigate]);
   return (
     <div className="container">
       <Navbar />
@@ -71,10 +61,18 @@ const RegisterComponent = ({ setToken }) => {
                 <input type="password" className="form-control" id="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <label htmlFor="password">Password</label>
               </div>
-              <button className="btn btn-success w-100 py-2" type="submit">Register</button>
+              <div className="form-floating mb-2">
+              <select className="form-control" id="role" value={role} onChange={(e) => setRole(e.target.value)}>
+  <option value="user">User</option>
+  <option value="admin">Admin</option>
+</select>
+
+                <label htmlFor="role">Select User Type</label>
+              </div>
+              <button className="btn btn-primary w-100 py-2" type="submit">Register</button>
             </form>
             <div className="text-start my-3">
-              <a href="remember.html"><label>Unohditko salasanasi?</label></a>
+            <Link to="/login"><label>Oletko jo jäsen?</label></Link>
             </div>
           </main>
         </>

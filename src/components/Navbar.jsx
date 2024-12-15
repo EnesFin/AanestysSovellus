@@ -5,17 +5,28 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
+    const role = localStorage.getItem('role');
+    if (token) {
+      setIsLoggedIn(true);
+      setIsAdmin(role === 'admin');
+    } else {
+      setIsLoggedIn(false);
+      setIsAdmin(false);
+    }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
     setIsLoggedIn(false);
+    setIsAdmin(false);
     navigate('/');
+    window.location.reload();
   };
 
   return (
@@ -30,13 +41,20 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/">Home</Link>
             </li>
+            {!isLoggedIn && ( 
+            <li className="nav-item">
+              <Link className="nav-link active" aria-current="page" to="/register">REKISTERÖIDY NYT!</Link>
+            </li>
+             )}
+            {isAdmin && (
+              <>
             <li className="nav-item">
               <Link className="nav-link" to="add">Add</Link>
             </li>
             <li className="nav-item">
               <Link className="nav-link" to="delete">Delete</Link>
-            </li>
-            
+            </li></>
+                  )}
           </ul>
           {isLoggedIn ? (
             <button className="btn btn-outline-danger" onClick={handleLogout}>Kirjaudu ulos</button>
