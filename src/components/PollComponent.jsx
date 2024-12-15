@@ -108,8 +108,8 @@ const PollComponent = () => {
 </p>
 
         <form className="d-flex mb-4" role="search">
-          <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-          <button className="btn btn-outline-success" type="button">Search</button>
+          <input className="form-control me-2" type="search" placeholder="Hae äänestää" aria-label="Search" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+          <button className="btn btn-outline-success" type="button">Hae</button>
         </form>
 
         {filteredPolls.map((poll) => (
@@ -166,16 +166,16 @@ const PollComponent = () => {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Authentication Required</h5>
+                <h5 className="modal-title">Todennus vaaditaan!</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>
               </div>
               <div className="modal-body">
-                <p>You need to log in or register to vote.</p>
+                <p>Sinun tulee kirjautua sisään tai rekisteröityä äänestääksesi.</p>
               </div>
               <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Close</button>
-                <button type="button" className="btn btn-primary" onClick={() => { setShowModal(false); window.location.href = '/login'; }}>Log In</button>
-                <button type="button" className="btn btn-success" onClick={() => { setShowModal(false); window.location.href = '/register'; }}>Register</button>
+                <button type="button" className="btn btn-primary" onClick={() => { setShowModal(false); window.location.href = '/login'; }}>Kirjaudu Sisään</button>
+                <button type="button" className="btn btn-success" onClick={() => { setShowModal(false); window.location.href = '/register'; }}>Rekisteröidy</button>
               </div>
             </div>
           </div>

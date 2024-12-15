@@ -39,7 +39,7 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+              <Link className="nav-link active" aria-current="page" to="/">Etusivu</Link>
             </li>
             {!isLoggedIn && ( 
             <li className="nav-item">
@@ -53,7 +53,7 @@ const Navbar = () => {
                   )}
           </ul>
           {isLoggedIn ? (
-            <button className="btn btn-outline-danger" onClick={handleLogout}>Kirjaudu ulos</button>
+            <button className="btn btn-outline-danger" onClick={handleLogout}>Kirjaudu Ulos</button>
           ) : (
             <Link to="/login"><button className="btn btn-outline-success">Kirjaudu Sisään</button></Link>
           )}
