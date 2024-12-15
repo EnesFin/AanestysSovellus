@@ -15,24 +15,59 @@ const RegisterComponent = ({ setToken }) => {
   const [countdown, setCountdown] = useState(3);
   const navigate = useNavigate();
 
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { username, password });
+      
+
+
+      if (response.data && response.data.token) {
+        setToken(response.data.token);
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('role', response.data.role);
+        setRegisterSuccess(true);
+      } else {
+        throw new Error('Login failed: Token not found');
+      }
+    } catch (error) {
+      console.error('Login failed:', error.response ? error.response.data : error.message);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, { username, password, email, role });
-      setToken(response.data.token);
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('role', role); // Directly store the role from state
-      setRegisterSuccess(true);
+      
+     
+
+      if (response.data && (response.data.message === 'User registered successfully' || response.data.message === 'Admin registered successfully')) {
+        
+        // Proceed to login if registration is successful
+        await handleLogin();
+      } else {
+        throw new Error('Registration failed');
+      }
     } catch (error) {
       console.error('Registration failed:', error.response ? error.response.data : error.message);
     }
   };
-  
-  
-  useEffect(() => { if (registerSuccess) { let timer = setInterval(() =>
-     { setCountdown((prev) => prev - 1); }, 1000); 
-     if (countdown === 0) { clearInterval(timer); navigate('/'); } 
-     return () => clearInterval(timer); } }, [registerSuccess, countdown, navigate]);
+
+  useEffect(() => {
+    if (registerSuccess) {
+      let timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+
+      if (countdown === 0) {
+        clearInterval(timer);
+        navigate('/');
+      }
+
+      return () => clearInterval(timer);
+    }
+  }, [registerSuccess, countdown, navigate]);
+
   return (
     <div className="container">
       <Navbar />
@@ -62,17 +97,16 @@ const RegisterComponent = ({ setToken }) => {
                 <label htmlFor="password">Password</label>
               </div>
               <div className="form-floating mb-2">
-              <select className="form-control" id="role" value={role} onChange={(e) => setRole(e.target.value)}>
-  <option value="user">User</option>
-  <option value="admin">Admin</option>
-</select>
-
+                <select className="form-control" id="role" value={role} onChange={(e) => setRole(e.target.value)}>
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
                 <label htmlFor="role">Select User Type</label>
               </div>
               <button className="btn btn-primary w-100 py-2" type="submit">Register</button>
             </form>
             <div className="text-start my-3">
-            <Link to="/login"><label>Oletko jo jäsen?</label></Link>
+              <Link to="/login"><label>Oletko jo jäsen?</label></Link>
             </div>
           </main>
         </>

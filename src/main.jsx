@@ -7,7 +7,7 @@ import LoginComponent from './components/LoginComponent';
 import RegisterComponent from './components/RegisterComponent';
 import PollComponent from './components/PollComponent';
 import AddPollComponent from './components/AddPollComponent';
-import DeletePollComponent from './components/DeletePollComponent';
+
 import './index.css';
 
 const App = () => {
@@ -20,7 +20,7 @@ const App = () => {
         <Route path="/login" element={<LoginComponent setToken={setToken} />} />
         <Route path="/register" element={<RegisterComponent setToken={setToken} />} />
         <Route path="/add" element={<AddPollComponent token={token} />} />
-        <Route path="/delete" element={<DeletePollComponent token={token} />} />
+
       </Routes>
     </Router>
   );

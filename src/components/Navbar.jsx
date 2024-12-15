@@ -47,13 +47,9 @@ const Navbar = () => {
             </li>
              )}
             {isAdmin && (
-              <>
             <li className="nav-item">
-              <Link className="nav-link" to="add">Add</Link>
+              <Link to="add"><button className="btn btn-outline-success">Lisää uusi kysely</button></Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="delete">Delete</Link>
-            </li></>
                   )}
           </ul>
           {isLoggedIn ? (
