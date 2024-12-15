@@ -5,6 +5,41 @@
 Voit myös aktiivisesti käyttää sitä verkkosivuston https://aanestys.enes.fi kautta.
 
 
+# Vite Polling Application
+
+This is a Vite-based polling application designed to allow users to create and participate in polls. The application supports both regular users and admin users, with admins having additional capabilities to manage polls.
+
+## Features
+
+- **User Registration and Authentication**: Users can register and log in to access the application.
+- **Poll Creation and Management**: Admin users can create new polls and delete existing ones.
+- **Participate in Polls**: Regular users can view and vote on polls.
+- **Real-time Updates**: Poll results update in real-time.
+- **Responsive Design**: The application is designed to be responsive and user-friendly on all devices.
+
+## Technologies Used
+
+- **Frontend**: Vite, React
+- **Backend**: Node.js, Express
+- **Database**: MongoDB
+- **Authentication**: JWT (JSON Web Token)
+- **Styling**: Bootstrap
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm
+
+### Installation
+
+1. **Clone the repository**:
+   ```sh
+   git clone https://github.com/yourusername/vite-polling-app.git
+   cd vite-polling-app
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
