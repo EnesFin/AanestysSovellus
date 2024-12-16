@@ -9,12 +9,16 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 const LoginComponent = ({ setToken }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [loginSuccess, setLoginSuccess] = useState(false);
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(2);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { username, password });
       setToken(response.data.token);
@@ -22,25 +26,28 @@ const LoginComponent = ({ setToken }) => {
       localStorage.setItem('role', response.data.role); 
       setLoginSuccess(true);
     } catch (error) {
+      setError('Tarkista kirjautumistietosi');
       console.error('Login failed:', error.response ? error.response.data : error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-      if (loginSuccess) {
-        let timer = setInterval(() => {
-          setCountdown((prev) => prev - 1);
-        }, 1000);
-  
-        if (countdown === 0) {
-          clearInterval(timer);
-          navigate('/');
-        }
-  
-        return () => clearInterval(timer);
+    if (loginSuccess) {
+      let timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+
+      if (countdown === 0) {
+        clearInterval(timer);
+        navigate('/');
       }
-    }, [loginSuccess, countdown, navigate]);
-  
+
+      return () => clearInterval(timer);
+    }
+  }, [loginSuccess, countdown, navigate]);
+
   return (
     <div className="container">
       <Navbar/>
@@ -65,7 +72,10 @@ const LoginComponent = ({ setToken }) => {
                 <input type="password" className="form-control" id="password" placeholder="Salasana" value={password} onChange={(e) => setPassword(e.target.value)} />
                 <label htmlFor="password">Salasana</label>
               </div>
-              <button className="btn btn-success w-100 py-2" type="submit">Kirjaudu</button>
+              {error && <div className="alert alert-danger">{error}</div>}
+              <button className="btn btn-success w-100 py-2" type="submit" disabled={loading}>
+                {loading ? 'Prosessi käynnissä...' : 'Kirjaudu'}
+              </button>
             </form>
             <div className="text-start my-3">
                <Link to="/register"><label>Etkö ole jäsen? REKISTERÖIDY NYT!</label></Link>

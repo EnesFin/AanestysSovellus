@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,21 +9,30 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 const AddPollComponent = () => {
   const [question, setQuestion] = useState('');
   const [options, setOptions] = useState(['', '']);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); // Loading state
+  const [success, setSuccess] = useState(false); // Success state
+  const [error, setError] = useState(''); // Error message state
 
   const handleAddPoll = async () => {
     const token = localStorage.getItem('token');
+    setLoading(true); // Start loading
+    setError(''); // Clear any previous error
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/polls`, 
         { question, options: options.map(option => ({ name: option })) },
         {
-          headers: { Authorization: `Bearer ${token}` }, // Ensure correct format
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
-      alert('Poll added successfully!');
-      navigate('/');
+      setSuccess(true);
+      setQuestion(''); // Clear question input
+      setOptions(['', '']); // Reset options
     } catch (error) {
-      console.error('Failed to add poll:', error.response ? error.response.data : error.message);
+      const errorMsg = error.response && error.response.data ? error.response.data.error : 'Failed to add poll';
+      setError(errorMsg);
+      console.error('Failed to add poll:', errorMsg);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -69,9 +78,19 @@ const AddPollComponent = () => {
             <button className="btn btn-danger" onClick={() => handleRemoveOption(index)}>Remove</button>
           </div>
         ))}
+        {error && <div className="alert alert-danger">Error: {error}</div>}
+        {success && (
+          <div className="alert alert-success">
+            Poll added successfully! <Link to="/">Return to homepage</Link>
+          </div>
+        )}
         <div className="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-          <button className="btn btn-secondary me-md-2" onClick={handleAddOption}>Add Option</button>
-          <button className="btn btn-primary" onClick={handleAddPoll}>Add Poll</button>
+          <button className="btn btn-secondary me-md-2" onClick={handleAddOption} disabled={loading}>
+            Add Option
+          </button>
+          <button className="btn btn-primary" onClick={handleAddPoll} disabled={loading}>
+            {loading ? 'Adding poll...' : 'Add Poll'}
+          </button>
         </div>
       </main>
       <Footer />

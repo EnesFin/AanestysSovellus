@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation(); // Get current route
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -41,21 +42,23 @@ const Navbar = () => {
             <li className="nav-item">
               <Link className="nav-link active" aria-current="page" to="/">Etusivu</Link>
             </li>
-            {!isLoggedIn && ( 
-            <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/register">REKISTERÖIDY NYT!</Link>
-            </li>
-             )}
+            {!isLoggedIn && location.pathname !== '/register' && (
+              <li className="nav-item">
+                <Link className="nav-link active" aria-current="page" to="/register">REKISTERÖIDY NYT!</Link>
+              </li>
+            )}
             {isAdmin && (
-            <li className="nav-item">
-              <Link to="add"><button className="btn btn-outline-success">Lisää uusi kysely</button></Link>
-            </li>
-                  )}
+              <li className="nav-item">
+                <Link to="add"><button className="btn btn-outline-success">Lisää uusi kysely</button></Link>
+              </li>
+            )}
           </ul>
           {isLoggedIn ? (
             <button className="btn btn-outline-danger" onClick={handleLogout}>Kirjaudu Ulos</button>
           ) : (
-            <Link to="/login"><button className="btn btn-outline-success">Kirjaudu Sisään</button></Link>
+            location.pathname !== '/login' && (
+              <Link to="/login"><button className="btn btn-outline-success">Kirjaudu Sisään</button></Link>
+            )
           )}
         </div>
       </div>

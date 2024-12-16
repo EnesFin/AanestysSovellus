@@ -10,17 +10,16 @@ const RegisterComponent = ({ setToken }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('user'); // default to 'user', can be 'admin' if required
+  const [role, setRole] = useState('user'); 
+  const [loading, setLoading] = useState(false);
   const [registerSuccess, setRegisterSuccess] = useState(false);
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(2);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, { username, password });
-      
-
-
       if (response.data && response.data.token) {
         setToken(response.data.token);
         localStorage.setItem('token', response.data.token);
@@ -30,26 +29,27 @@ const RegisterComponent = ({ setToken }) => {
         throw new Error('Login failed: Token not found');
       }
     } catch (error) {
+      setError('Tarkista kirjautumistietosi');
       console.error('Login failed:', error.response ? error.response.data : error.message);
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); 
+    setError('');
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/register`, { username, password, email, role });
-      
-     
-
       if (response.data && (response.data.message === 'User registered successfully' || response.data.message === 'Admin registered successfully')) {
-        
-        // Proceed to login if registration is successful
         await handleLogin();
       } else {
         throw new Error('Registration failed');
       }
     } catch (error) {
+      setError('Rekisteröinti epäonnistui');
       console.error('Registration failed:', error.response ? error.response.data : error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -103,7 +103,10 @@ const RegisterComponent = ({ setToken }) => {
                 </select>
                 <label htmlFor="role">Valitse Käyttäjätyyppi</label>
               </div>
-              <button className="btn btn-primary w-100 py-2" type="submit">Rekisteröidy nyt</button>
+              {error && <div className="alert alert-danger">{error}</div>}
+              <button className="btn btn-primary w-100 py-2" type="submit" disabled={loading}>
+                {loading ? 'Prosessi käynnissä...' : 'Rekisteröidy nyt'}
+              </button>
             </form>
             <div className="text-start my-3">
               <Link to="/login"><label>Oletko jo jäsen?</label></Link>
