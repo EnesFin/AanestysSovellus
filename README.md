@@ -6,6 +6,9 @@ You can test the fully functional version of the project at https://aanestys.ene
 <a href="https://github.com/Yaro101/AanestysSovellus_Backend" target="_blank" rel="noopener noreferrer">The backend application</a>, developed as a team project, is running on Back4app.
 
 
+After downloading, it will be enough to do "npm install" and run it directly with "npm run dev".
+It works automatically with the .env file connected to the database and backend.
+
 # Vite Polling Application
 
 This is a Vite-based polling application designed to allow users to create and participate in polls. The application supports both regular users and admin users, with admins having additional capabilities to manage polls.
