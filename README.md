@@ -2,8 +2,8 @@
 
 # Äänestys Sovellus - Tiimi projekti
 
-You can test the fully functional version of the project at https://aanestys.enes.fi/. Please note that the website is in Finnish. 
-<a href="https://github.com/EnesFin/AanestysSovellus" target="_blank" rel="noopener noreferrer">The backend application</a>, developed as a team project, is running on Back4app.
+You can test the fully functional version of the project at https://aanestys.enes.fi/. Please note that the website is in Finnish.<br>
+<a href="https://github.com/Yaro101/AanestysSovellus_Backend" target="_blank" rel="noopener noreferrer">The backend application</a>, developed as a team project, is running on Back4app.
 
 
 # Vite Polling Application
